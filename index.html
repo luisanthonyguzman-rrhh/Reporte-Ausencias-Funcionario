@@ -207,11 +207,12 @@
     <tr><td>Descanso Médico</td><td id="d2"></td></tr>
     <tr><td>Feriados No Trabajados</td><td id="d3"></td></tr>
     <tr><td>Permisos</td><td id="d4"></td></tr>
-    <tr><td>Día Libre Pagado</td><td id="d5"></td></tr>
-    <tr><td>Ausencia Injustificada</td><td id="d6"></td></tr>
-    <tr><td>Suspensiones</td><td id="d7"></td></tr>
-    <tr><td>Suspensión Perfecta de Vínculo Laboral</td><td id="d8"></td></tr>
-    <tr class="total"><td>TOTAL DÍAS</td><td id="d9"></td></tr>
+    <tr><td>Día Libre por Cumpleaños</td><td id="d5"></td></tr>
+    <tr><td>Día Libre Pagado</td><td id="d6"></td></tr>
+    <tr><td>Ausencia Injustificada</td><td id="d7"></td></tr>
+    <tr><td>Suspensiones</td><td id="d8"></td></tr>
+    <tr><td>Suspensión Perfecta de Vínculo Laboral</td><td id="d9"></td></tr>
+    <tr class="total"><td>TOTAL DÍAS</td><td id="d10"></td></tr>
   </table>
 
   <br>
@@ -249,7 +250,7 @@ function verDetalle() {
     return;
   }
 
-  for (let i = 1; i <= 9; i++) {
+  for (let i = 1; i <= 10; i++) {
     document.getElementById("d" + i).innerText = trabajadores[codigo][i - 1];
   }
 
