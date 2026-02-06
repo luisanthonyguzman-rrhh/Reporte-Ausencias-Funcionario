@@ -1,1 +1,268 @@
-# Reporte-Ausencias-Funcionario
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de Ausencias</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      
+      margin: 0 auto;
+      }   
+           #detalle {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+
+      input, button {
+        font-size: 28px;
+        padding: 13px;
+        width: 100%;
+        max-width: 340px;
+        margin: 20px auto; 
+        border-radius: 10px
+      }   
+                button {
+              font-size: 30px;
+              padding: 13px;
+              background-color: #e67300;
+              color: white;
+              border: none;
+              cursor: pointer;
+              border-radius: 10px
+            }
+            #detalle button {
+              display: block;
+              margin: 20px auto;
+            }
+
+      h2 {
+        font-size: 32px; /* Aumentamos el tamaño del título */
+        margin-bottom: 20px; /* Espacio debajo del título */
+      }
+
+    
+      #detalle {
+        max-width: 400px;
+        margin: 20px auto;   /* 👈 CLAVE: auto centra en PC */
+        padding: 15px;
+        text-align: center;
+      }
+
+        
+      }
+         #detalle h1, #detalle h2 {
+          margin-top: 0; /* Elimina el margen superior del título */
+          text-align: center;
+       }
+
+      /* Aseguramos que la tabla y otros elementos dentro de #detalle se centren */
+      table {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto 20px auto;  /* Centrado de la tabla */
+        border-collapse: collapse;
+        overflow: hidden
+        border-radius: 12px
+      }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #f2f2f2;
+      text-align: center;
+    }
+    .pantalla {
+      display: none;
+    }
+    .total {
+      font-weight: bold;
+      color: #e67300;
+    } 
+      .encabezado-reporte {
+  margin-bottom: 18px;
+}
+
+.encabezado-reporte h1 {
+  font-size: 18px;
+  margin: 4px 0;
+  font-weight: bold;
+}
+
+.encabezado-reporte h2 {
+  font-size: 15px;
+  margin: 2px 0;
+  font-weight: bold;
+}
+
+.encabezado-reporte p {
+  font-size: 13px;
+  margin-top: 10px;
+  line-height: 1.4;
+}
+
+.pie-reporte {
+  margin-top: 18px;
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.pie-reporte strong {
+  display: block;
+  margin-top: 12px;
+  }
+          /* Esto asegura que el contenido no se desborde y se ajuste correctamente */
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          width: 100%;
+          box-sizing: border-box; /* Evita que el contenido se expanda más allá de la pantalla */
+        }
+        
+        body {
+          overflow-x: hidden; /* Evita que el contenido se desborde en el eje X */
+          -webkit-overflow-scrolling: touch; /* Mejora el desplazamiento en iOS */
+        }
+        
+        /* Asegúrate de que el contenedor de la página también se ajuste correctamente */
+        .container {
+          max-width: 800px; /* Limita el ancho máximo para PC */
+          margin: 0 auto;
+          padding: 20px;
+        }
+      /* Centrar SOLO la columna DÍAS */
+      table td:nth-child(2) {
+        text-align: center;
+        font-weight: bold;
+      }
+                    /* Texto "Ingrese su código de trabajador" */
+                    .texto-codigo {
+                      font-size: 28px;   /* +3 tamaños */
+                      margin-bottom: 20px;
+                    }
+                    
+                    /* Input del código */
+                    .input-codigo {
+                      font-size: 35px;
+                      padding: 20px;
+                      height: 40px;
+                    }
+                    .bloque-login {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      gap: 15px;
+                    }
+  
+  </style>
+</head>
+<body>
+<!-- LOGO Y TÍTULO ARRIBA -->
+<div style="text-align:center; margin-bottom:20px;">
+  <img src="logo.png" alt="Logo empresa" style="max-width:150px; display:block; margin:auto;">
+
+<!-- PANTALLA 1 -->
+<div id="login" class="pantalla" style="display:block;">
+  <h2>Consulta de Ausencias</h2>
+  <p class="texto-codigo">Ingrese su código de trabajador</p>
+  
+  <div class="bloque-login">
+  <input type="text" id="codigo" placeholder="Código"
+         class="input-codigo"
+         maxlength="5"
+         inputmode="numeric"
+         oninput="validarNumero()">
+  <button onclick="verDetalle()">Buscar</button>
+</div>
+
+  <p id="error" style="color:red;"></p>
+</div>
+
+<!-- PANTALLA 2 -->
+<div id="detalle" class="pantalla">
+  <div class="encabezado-reporte">
+  <h1>REPORTE DE INASISTENCIA PARA CÁLCULO DE UTILIDADES</h1>
+  <h2>PERIODO 2025 – FUNCIONARIOS</h2>
+
+  <p>
+    Estimado(a) trabajador(a):<br>
+    Ponemos a su disposición el detalle de inasistencias que usted presenta durante
+    el periodo 2025, los cuales no son considerados o computados para el cálculo de
+    utilidades de dicho periodo.
+  </p>
+</div>
+  
+  <h2>Días de ausencias del trabajador</h2>
+
+  <table>
+    <tr><th>CONCEPTO</th><th>DÍAS</th></tr>
+    <tr><td>Vacaciones</td><td id="d1"></td></tr>
+    <tr><td>Descanso Médico</td><td id="d2"></td></tr>
+    <tr><td>Feriados No Trabajados</td><td id="d3"></td></tr>
+    <tr><td>Permisos</td><td id="d4"></td></tr>
+    <tr><td>Día Libre Pagado</td><td id="d5"></td></tr>
+    <tr><td>Ausencia Injustificada</td><td id="d6"></td></tr>
+    <tr><td>Suspensiones</td><td id="d7"></td></tr>
+    <tr><td>Suspensión Perfecta de Vínculo Laboral</td><td id="d8"></td></tr>
+    <tr class="total"><td>TOTAL DÍAS</td><td id="d9"></td></tr>
+  </table>
+
+  <br>
+  <button onclick="volver()">Cerrar / Volver</button>
+  <div class="pie-reporte">
+  <p>
+    En caso de presentar observaciones, se tiene como plazo máximo hasta el
+    <strong style="font-size: 1.5em; color: #e67300;">28 de febrero del 2026</strong> para apersonarse a oficinas de Recursos Humanos
+    de lunes a viernes en horario laboral o a través del correo
+    <a href="mailto:Consulta.TrabajadoresRRHH@glencore.com.pe">Consulta.TrabajadoresRRHH@glencore.com.pe</a>
+  </p>
+</div>
+
+  <strong>
+    Atentamente,<br>
+    Superintendencia de Remuneraciones, Compensaciones y Administración de Personal
+  </strong>
+</div>
+</div>
+
+<script>
+const trabajadores = {
+  "33128": [18,0,0,0,0,0,0,0,18],
+"33130": [30,0,0,0,0,0,0,0,30],
+"33137": [30,33,0,0,0,0,0,0,63],
+"98711": [0,3,0,0,0,0,0,0,3]
+};
+
+function verDetalle() {
+  const codigo = document.getElementById("codigo").value.trim();
+  const error = document.getElementById("error");
+
+  if (!trabajadores[codigo]) {
+    error.innerText = "❌ Código incorrecto";
+    return;
+  }
+
+  for (let i = 1; i <= 9; i++) {
+    document.getElementById("d" + i).innerText = trabajadores[codigo][i - 1];
+  }
+
+  document.getElementById("login").style.display = "none";
+  document.getElementById("detalle").style.display = "block";
+}
+
+function volver() {
+  document.getElementById("codigo").value = "";
+  document.getElementById("error").innerText = "";
+  document.getElementById("detalle").style.display = "none";
+  document.getElementById("login").style.display = "block";
+}
+</script>
+
+</body>
