@@ -76,15 +76,12 @@
 </div>
 
 <script>
-// Detecta si el usuario está en un dispositivo Android o iOS
+
 document.getElementById('downloadButton').onclick = function() {
   var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
   if (/android/i.test(userAgent)) {
-    // Si es Android, redirige a la Play Store
     window.location.href = "https://play.google.com/store/apps/details?id=com.successfactors.successfactors&hl=es_PE&pli=1";
   } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    // Si es iOS, redirige a la App Store
     window.location.href = "https://apps.apple.com/us/app/sap-successfactors-mobile/id426562526"; 
   } else {
     window.location.href = "https://auqocwswi.accounts.ondemand.com/saml2/idp/sso?sp=https://www.successfactors.com/glencoreinP3&idp=https://auqocwswi.accounts.ondemand.com";
